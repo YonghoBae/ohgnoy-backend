@@ -9,8 +9,12 @@ router.get('/create', async(req,res)=>{
     res.render('study/create');
 });
 
+// router.post();
+
 router.get('/modify', async(req,res)=>{
     res.render('study/modify');
 });
+
+// router.post();
 
 module.exports = router;
