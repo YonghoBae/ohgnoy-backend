@@ -11,11 +11,24 @@ var usersRouter = require("./routes/users");
 var studysRouter = require("./routes/study");
 
 var sequelize = require("./models/index.js").sequelize;
+
 const cors = require("cors");
 
 var app = express();
 
 sequelize.sync();
+
+
+//모든 웹사이트/모바일 프론트에서 RESTAPI를 접근할수 있게 허락함
+app.use(cors());
+
+// app.use(
+//   cors({
+//     methods: ["GET", "POST", "DELETE", "OPTIONS"],
+//     origin: ["http://localhost:3000"],
+//   })
+// );
+
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -30,13 +43,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/study", studysRouter);
-
-app.use(
-  cors({
-    methods: ["GET", "POST", "DELETE", "OPTIONS"],
-    origin: ["http://localhost:3130"],
-  })
-);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
