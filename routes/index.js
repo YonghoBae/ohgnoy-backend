@@ -82,7 +82,7 @@ router.post("/entry", async (req, res) => {
   } catch (err) {
     apiResult.code = 500;
     apiResult.data = null;
-    apiResult.msg = "회원가입 실패입니다.";
+    apiResult.msg = "ServerError";
     console.log(err);
   }
 
@@ -131,7 +131,7 @@ router.post("/login", async (req, res) => {
     }
   } catch (err) {
     apiResult.code = 500;
-    apiResult.msg = "Failed";
+    apiResult.msg = "ServerError";
   }
 
   res.json(apiResult);
