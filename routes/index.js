@@ -7,8 +7,31 @@ var encrypt = require("bcryptjs");
 
 var jwt = require("jsonwebtoken");
 
-router.get("/",async(req,res,next)=>{
-  res.render("index",{title:"BackEnd API"});
+router.get("/", async (req, res, next) => {
+  res.render("index", { title: "BackEnd API" });
+});
+
+router.get("/token", async (req, res) => {
+  let apiResult = {
+    code: 400,
+    data: null,
+    msg: "",
+  };
+
+  try {
+    var token = req.headers.authorization.split("Bearer ")[1];
+    const loginUser = await jwt.verify(token, process.env.JWT_AUTH_KEY);
+
+    apiResult.code = 200;
+    apiResult.data = loginUser;
+    apiResult.msg = "Ok";
+  } catch (err) {
+    apiResult.code = 500;
+    apiResult.data = null;
+    apiResult.msg = "ServerError";
+  }
+
+  return res.json(apiResult);
 });
 
 router.post("/entry", async (req, res) => {
@@ -42,7 +65,7 @@ router.post("/entry", async (req, res) => {
       return res.json(apiResult);
     }
 
-    const entryPassword = await encrypt.hash(password,12);
+    const entryPassword = await encrypt.hash(password, 12);
 
     const entryUser = {
       nick_name,
@@ -82,10 +105,10 @@ router.post("/login", async (req, res) => {
     if (dbUser) {
       const comparePassword = await encrypt.compare(password, dbUser.password);
       if (comparePassword) {
-
         const tokenData = {
           email: dbUser.email,
           nick_name: dbUser.nick_name,
+          user_id: dbUser.user_id,
         };
 
         const token = await jwt.sign(tokenData, process.env.JWT_AUTH_KEY, {
@@ -104,7 +127,7 @@ router.post("/login", async (req, res) => {
     } else {
       apiResult.code = 400;
       apiResult.data = null;
-      apiResult.msg = "NotExitPassword";
+      apiResult.msg = "NotExitEmail";
     }
   } catch (err) {
     apiResult.code = 500;
