@@ -7,6 +7,8 @@ var encrypt = require("bcryptjs");
 
 var jwt = require("jsonwebtoken");
 
+const nodemailer = require("nodemailer");
+
 router.get("/", async (req, res, next) => {
   res.render("index", { title: "BackEnd API" });
 });
@@ -131,6 +133,56 @@ router.post("/login", async (req, res) => {
     }
   } catch (err) {
     apiResult.code = 500;
+    apiResult.msg = "ServerError";
+  }
+
+  res.json(apiResult);
+});
+
+router.post("/email", async (req, res) => {
+  let apiResult = {
+    code: 400,
+    data: null,
+    msg: "",
+  };
+
+  const smtpTransport = nodemailer.createTransport({
+    pool: true,
+    maxConnections: 1,
+    service: "naver",
+    host: "smtp.naver.com",
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PW,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  var randNum = Math.floor(Math.random() * (999999 - 111111 + 1)) + 111111;
+
+  const email = req.body.email;
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: email,
+    subject: "Ohgnoy 메일 인증",
+    html: "<h1>인증번호를 입력해주세요 \n\n\n\n\n\n</h1>" + randNum,
+  };
+
+  try{
+    const info = await smtpTransport.sendMail(mailOptions);
+    console.log(info);
+    apiResult.code = 200;
+    apiResult.data = randNum;
+    apiResult.msg = "SendMail";
+  }catch(err){
+    apiResult.code = 500;
+    apiResult.data = null;
     apiResult.msg = "ServerError";
   }
 
