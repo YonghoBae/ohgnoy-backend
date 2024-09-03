@@ -80,7 +80,7 @@ router.post("/entry", async (req, res) => {
 
     apiResult.code = 200;
     apiResult.data = registedUser;
-    apiResult.msg = "Ok";
+    apiResult.msg = "Sccess";
   } catch (err) {
     apiResult.code = 500;
     apiResult.data = null;

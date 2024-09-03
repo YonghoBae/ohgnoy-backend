@@ -20,7 +20,9 @@ db.Sequelize = Sequelize; //Sequelize팩키지에서 제공하는 각종 데이�
 
 //회원모델 모듈파일 참조하고 db속성정의하기
 db.User = require('./user.js')(sequelize,Sequelize);
-
+db.Post = require('./post.js')(sequelize,Sequelize);
+db.Comment = require('./comment.js')(sequelize,Sequelize);
+db.Like = require('./like.js')(sequelize,Sequelize);
 //회원모델 모듈파일 참조하고 db속성정의하기
 //db.Member = require('./member.js')(sequelize,Sequelize);
 
