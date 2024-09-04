@@ -50,7 +50,6 @@ module.exports = function (sequelize, DataTypes) {
         comment: "게시물 또는 댓글에 대한 좋아요 정보",
         indexes: [
           {
-            name: "PRIMARY",
             unique: true,
             using: "BTREE",
             fields: [{ name: "like_id" }],

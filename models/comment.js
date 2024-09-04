@@ -46,7 +46,6 @@ module.exports = function (sequelize, DataTypes) {
         comment: "게시물에 대한 댓글 정보",
         indexes: [
           {
-            name: "PRIMARY",
             unique: true,
             using: "BTREE",
             fields: [{ name: "comment_id" }],

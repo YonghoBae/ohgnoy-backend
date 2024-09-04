@@ -171,7 +171,7 @@ router.post("/email", async (req, res) => {
     from: process.env.EMAIL,
     to: email,
     subject: "Ohgnoy 메일 인증",
-    html: "<h1>인증번호를 입력해주세요 \n\n\n\n\n\n</h1>" + randNum,
+    html: "인증번호를 입력해주세요 \n\n\n\n\n\n" + randNum,
   };
 
   try{
