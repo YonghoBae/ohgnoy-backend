@@ -82,6 +82,17 @@ router.post("/create", upload.single("coverImage"), async (req, res) => {
 });
 
 router.post("/modify/:id", async (req, res) => {
+  let apiResult = {
+    data: null,
+    msg: "",
+  };
+
+  try{
+    
+  }catch(err){
+
+  }
+
   res.status(200).json(apiResult);
 });
 
