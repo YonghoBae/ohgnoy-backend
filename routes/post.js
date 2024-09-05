@@ -1,5 +1,7 @@
 var express = require("express");
 const db = require("../models");
+const multer = require("multer");
+
 var router = express.Router();
 
 // Multer 설정: 파일이 저장될 위치와 파일 이름 설정
@@ -28,6 +30,8 @@ const upload = multer({
   limits: { fileSize: 1024 * 1024 * 5 }, // 파일 크기 제한: 5MB
 });
 
+
+
 router.get("/list", async (req, res) => {
   let apiResult = {
     data: null,
@@ -46,6 +50,7 @@ router.get("/list", async (req, res) => {
 
   res.status(200).json(apiResult);
 });
+
 
 router.post("/create", upload.single("coverImage"), async (req, res) => {
   let apiResult = {
@@ -87,11 +92,8 @@ router.post("/modify/:id", async (req, res) => {
     msg: "",
   };
 
-  try{
-    
-  }catch(err){
-
-  }
+  try {
+  } catch (err) {}
 
   res.status(200).json(apiResult);
 });
