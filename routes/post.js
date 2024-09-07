@@ -3,6 +3,7 @@ const db = require("../models");
 const multer = require("multer");
 
 var router = express.Router();
+const multer = require("multer");
 
 // Multer 설정: 파일이 저장될 위치와 파일 이름 설정
 const storage = multer.diskStorage({
