@@ -59,6 +59,11 @@ router.post("/create", upload.single("coverImage"), async (req, res) => {
   };
 
   try {
+    if(!req.headers.authorization){
+      apiResult.msg = "Unauthorized";
+      return res.status(401).json(apiResult);
+    }
+
     var token = req.headers.authorization.split("Bearer ")[1];
     const loginUser = await jwt.verify(token, process.env.JWT_AUTH_KEY);
 
